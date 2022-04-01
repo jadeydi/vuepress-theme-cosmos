@@ -2,7 +2,7 @@
   div
     .container
       .crumbs
-        router-link(to="/").crumbs__item {{$site.title || 'Home'}}
+        router-link(to="/").crumbs__item {{$localeConfig.title || 'Home'}}
         router-link(:to="item.path" v-if="item.title" v-for="item in breadcrumbs").crumbs__item {{item.title}}
       .menu
         .menu__item(:style="{visibility: $page.headers && $page.headers.length > 0 ? 'visible' : 'hidden'}")

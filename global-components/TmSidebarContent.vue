@@ -1,7 +1,7 @@
 <template lang="pug">
   div(style="height: 100%; position: relative")
     .container
-      router-link(to="/" v-if="!(compact === true)").logo__container
+      router-link(:to="$localeConfig.path" v-if="!(compact === true)").logo__container
         .logo
           .logo__img__custom(v-if="$themeConfig.logo && $themeConfig.logo.src")
             img(:src="$themeConfig.logo.src")
@@ -9,7 +9,7 @@
             component(:is="`logo-${$themeConfig.label || 'sdk'}`")
           .logo__text(v-if="!$themeConfig.logo") {{$site.title || 'Documentation'}}
       .items(:class="[`footer__compact__${!!(compact === true)}`]")
-        div(v-for="item in value" :style="{display: $themeConfig.sidebar.auto == false && item.title === '' ? 'none' : 'block'}").sidebar
+        div(v-for="item in value" :style="{display: sidebarStyle(item)}").sidebar
           .title {{item.title}}
           client-only
             tm-sidebar-tree(:value="item.children" v-if="item.children" :tree="tree" :level="0").section
@@ -214,6 +214,20 @@ export default {
     },
     sidebar() {
       return this.value;
+    },
+    hasLocales() {
+      return (
+        this.$site.locales && Object.entries(this.$site.locales).length > 1
+      );
+    },
+  },
+  methods: {
+    sidebarStyle(item) {
+      if (this.hasLocales) {
+        return this.$themeConfig.locales[this.$localeConfig.path].sidebar.auto == false && item.title === '' ? 'none' : 'block';
+      } else {
+        return this.$themeConfig.sidebar.auto == false && item.title === '' ? 'none' : 'block';
+      }
     },
   },
 };

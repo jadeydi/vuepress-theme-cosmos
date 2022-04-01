@@ -433,11 +433,20 @@ export default {
       return this.sortedList(tree);
     },
     tree() {
-      const autoSidebar =
-        this.$themeConfig.sidebar.auto == false
+      let autoSidebar;
+      if (this.hasLocales) {
+        autoSidebar =
+          this.$themeConfig.locales[this.$localeConfig.path].sidebar.auto == false
           ? { title: "", children: this.directoryTree } //{}
           : { title: "", children: this.directoryTree };
-      return [autoSidebar, ...(this.$themeConfig.sidebar.nav || [])];
+        return [autoSidebar, ...(this.$themeConfig.locales[this.$localeConfig.path].sidebar.nav || [])];
+      } else {
+        autoSidebar =
+          this.$themeConfig.sidebar.auto == false
+          ? { title: "", children: this.directoryTree } //{}
+          : { title: "", children: this.directoryTree };
+        return [autoSidebar, ...(this.$themeConfig.sidebar.nav || [])];
+      }
     }
   },
   methods: {
