@@ -48,8 +48,6 @@
     fill var(--color-primary, blue)
 
     &__custom
-      height 2.5rem
-
       &__img
         max-width 100%
         max-height 100%

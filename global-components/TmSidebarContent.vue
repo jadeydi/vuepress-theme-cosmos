@@ -5,6 +5,7 @@
         .logo
           .logo__img__custom(v-if="$themeConfig.logo && $themeConfig.logo.src")
             img(:src="$themeConfig.logo.src")
+            .name {{ $localeConfig.name }}
           .logo__img(v-else)
             component(:is="`logo-${$themeConfig.label || 'sdk'}`")
           .logo__text(v-if="!$themeConfig.logo") {{$site.title || 'Documentation'}}
@@ -51,6 +52,16 @@
 
   &__text
     font-weight 600
+
+.logo__img__custom
+  display flex
+  align-items center
+  img
+    width 1.8rem
+  .name
+    margin-left .5rem
+    font-weight 600
+    font-size .875rem
 
 .logo__container
   position sticky
