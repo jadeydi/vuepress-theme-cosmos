@@ -3,6 +3,7 @@
     .container
       .search__container
         tm-select-version(v-if="$themeConfig.versions")
+        tm-select-language
         .search(@click="$emit('search', true)" v-if="$themeConfig.algolia")
           .search__icon
             icon-search

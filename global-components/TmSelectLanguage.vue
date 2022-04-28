@@ -15,7 +15,7 @@ select
   font-size 0.875rem
 
 .select
-  border 2px solid rgba(140, 145, 177, 0.32)
+  border 0
   padding 0.25rem 0.5rem
   border-radius 6px
   background-color transparent
