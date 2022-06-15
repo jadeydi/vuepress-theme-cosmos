@@ -49,6 +49,8 @@
 
     &__custom
       &__img
+        width 2rem
+        height 2rem
         max-width 100%
         max-height 100%
 
