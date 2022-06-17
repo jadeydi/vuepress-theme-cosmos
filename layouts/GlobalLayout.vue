@@ -439,7 +439,8 @@ export default {
           this.$themeConfig.locales[this.$localeConfig.path].sidebar.auto == false
           ? { title: "", children: this.directoryTree } //{}
           : { title: "", children: this.directoryTree };
-        return [autoSidebar, ...(this.$themeConfig.locales[this.$localeConfig.path].sidebar.nav || [])];
+
+        return this.$themeConfig.locales[this.$localeConfig.path].sidebar.nav || [];
       } else {
         autoSidebar =
           this.$themeConfig.sidebar.auto == false

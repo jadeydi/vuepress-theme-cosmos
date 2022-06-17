@@ -3,7 +3,7 @@
     .links
       .links__wrapper
         .links__container(v-if="$page.frontmatter.prev || (linkPrevNext && linkPrevNext.prev && linkPrevNext.prev.frontmatter && linkPrevNext.prev.frontmatter.order !== false)")
-          router-link.links__item.links__item__left(:to="$page.frontmatter.prev || linkPrevNext.prev.regularPath")
+          router-link.links__item.links__item__left(:to="$page.frontmatter.prev || linkPrevNext.prev.path")
             .links__item__icon
               svg(xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 64 64")
                 title arrow-right
@@ -16,7 +16,7 @@
               .links__item__desc(v-if="linkPrevNext.prev.frontmatter.description" v-html="shorten(linkPrevNext.prev.frontmatter.description)")
       .links__wrapper
         .links__container(v-if="$page.frontmatter.next || (linkPrevNext && linkPrevNext.next && linkPrevNext.next.frontmatter && linkPrevNext.next.frontmatter.order !== false)")
-          router-link.links__item.links__item__right(:to="$page.frontmatter.next || linkPrevNext.next.regularPath")
+          router-link.links__item.links__item__right(:to="$page.frontmatter.next || linkPrevNext.next.path")
             div
               .links__label Next
               .links__item__title {{$page.frontmatter.next || linkPrevNext.next.title}}
@@ -154,15 +154,17 @@ export default {
         return tree.forEach((item, i) => {
           const children = item.children;
           if (children) {
-            const index = findIndex(children, ["regularPath", this.$page.path]);
+            const index = findIndex(children, (c) => { return c.path && this.$page.path.includes(c.path) });
             if (index >= 0 && children[index - 1]) {
               result.prev = children[index - 1];
+              result.prev.frontmatter = {};
             }
             if (index >= 0 && children[index + 1]) {
               result.next = children[index + 1];
+              result.next.frontmatter = {};
             } else if (index >= 0 && tree[i + 1] && tree[i + 1].children) {
               result.next = find(tree[i + 1].children, x => {
-                return x.frontmatter && x.frontmatter.order !== false;
+                return true;
               });
             }
             return search(item.children);
